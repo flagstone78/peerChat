@@ -1,58 +1,25 @@
-<script src="https://cdn.jsdelivr.net/npm/peerjs@1.2.0/dist/peerjs.min.js"></script>
-<script>
-    var allConns = [];
-    //object representing my connection to peer server
-    const peer = new Peer(null, {
-      host: 'localhost',
-      port: 443,
-      path: '/myapp'
-    });
-
-    peer.on('open', function(id) {
-        console.log('My peer ID is: ' + id);
-    });
-
-    peer.on('connection', function(conn) {
-        console.log("connection");
-        allConns.push(conn);
-    });
-
-    peer.on('disconnected',()=>{
-        console.log("keep alive");
-        peer.reconnect();
-    })
-
-
-    function connectTo(id){
-        conn = peer.connect(id);
-        addConnCallbacks(conn);
-    }
-
-    function addConnCallbacks(c){
-        c.on('open', function() {
-            console.log("connection opened!");    
-        });
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+        <title>Peer Chat</title>
+		<link rel="icon" type="image/png" href="favicon.ico">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<!-- <link type="text/css" rel="stylesheet" href="main.css"> -->
+		<style>
+			body {
+				background-color: #cce0ff;
+                color: #000;
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+			}
+        </style>
         
-        // Receive messages
-        c.on('data', function(data) {
-            console.log('Received', data);
-        });
-        allConns.push(conn);
-    }
+        <script src="./js/libraries/PEERJS/peerjs.js"></script>
+        <script type="module" src="./js/main.mjs"></script>
+	</head>
 
-    function startWebCam(){
-        
-        let constraints = { audio: true, video: true };
-        navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
-            /* use the stream */
-            //console.log(stream);
-            a = document.createElement("video");
-            document.body.append(a);
-            a.srcObject = stream;
-            a.play();
-        })
-        .catch(function(err) {
-        /* handle the error */
-        });
-    }
-</script>
+	<body></body>
+</html>
