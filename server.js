@@ -8,8 +8,8 @@ app.use(express.static('./html'));
 
 //https keys:
 const sslKeys = {
-    key: fs.readFileSync('key.pem'),
-    cert: fs.readFileSync('cert.pem')
+    key: fs.readFileSync('../key.pem'),
+    cert: fs.readFileSync('../cert.pem')
 };
 
 
