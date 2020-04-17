@@ -16,9 +16,9 @@ const sslKeys = {
 //peer sever
 const peerServer = PeerServer({
   port: 443,
-  proxied: true,
   ssl: sslKeys,
-  path:'/myapp'
+  path:'/myapp',
+  allow_discovery:true
 });
 
 peerServer.on('connection',(client)=>{

@@ -16,7 +16,7 @@ peer.on('open', function(id) {
 
 peer.on('connection', function(conn) {
     console.log("connection");
-    allConns.push(conn);
+    addConnCallbacks(conn);
 });
 
 peer.on('disconnected',()=>{
@@ -25,8 +25,24 @@ peer.on('disconnected',()=>{
 })
 
 function connectTo(id){
-    conn = peer.connect(id);
+    let conn = peer.connect(id);
     addConnCallbacks(conn);
+}
+
+let app = {peers:[]};
+window.app = app;
+//connect to all
+peer.listAllPeers(function(peers){
+    console.log("all peers", peers)
+    app.peers = peers;
+    setTimeout(connectAll,100);
+});
+
+function connectAll(){
+    for(let i of app.peers){
+        console.log('n',i);
+        connectTo(i);
+    }
 }
 
 function addConnCallbacks(c){
@@ -38,7 +54,7 @@ function addConnCallbacks(c){
     c.on('data', function(data) {
         console.log('Received', data);
     });
-    allConns.push(conn);
+    allConns.push(c);
 }
 
 function startWebCam(){
@@ -57,6 +73,8 @@ function startWebCam(){
 }
 
 window.startWebCam = startWebCam;
+window.peer = peer;
+window.allConns = allConns;
 
 Room.start();
 
