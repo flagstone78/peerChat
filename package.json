@@ -9,7 +9,7 @@
   "author": "Alan Mathias",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.3",
+    "express": "^4.19.2",
     "node": "^13.13.0",
     "peer": "^0.5.3"
   },
